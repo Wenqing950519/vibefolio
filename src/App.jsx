@@ -163,7 +163,7 @@ const App = () => {
         }
       } else if (type === 'Stock' || type === 'TWStock') {
         let sym = type === 'TWStock' ? `${symbol}.TW` : symbol;
-        const res = await fetch(`/api/yahoo/${sym}?interval=1d&period1=${startTimestamp}&period2=${endTimestamp}`)
+        const res = await fetch(`/api/yahoo/${sym}?period1=${startTimestamp}&period2=${endTimestamp}&interval=1d`)
         const data = await res.json();
         if (data.chart.result && data.chart.result[0].indicators.quote[0].close) {
           const closePrices = data.chart.result[0].indicators.quote[0].close;

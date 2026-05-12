@@ -1,8 +1,12 @@
 export default async function handler(req, res) {
   const reqUrl = new URL(req.url, 'http://localhost')
   const path = reqUrl.searchParams.get('path') || ''
-  const search = reqUrl.search.replace(`?path=${encodeURIComponent(path)}`, '').replace(/^&/, '?')
-  const url = `https://query1.finance.yahoo.com${path}${search}`
+  
+  const allParams = new URLSearchParams(reqUrl.search)
+  allParams.delete('path')
+  const queryString = allParams.toString()
+  
+  const url = `https://query1.finance.yahoo.com/v8/finance/chart/${path}${queryString ? '?' + queryString : ''}`
   
   res.setHeader('Access-Control-Allow-Origin', '*')
   
